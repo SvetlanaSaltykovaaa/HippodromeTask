@@ -24,6 +24,7 @@ class HorseTest {
         assertEquals("Name cannot be null.", thrown.getMessage());
     }
 
+
     @Test
     public void isSpeedIsNegative() {
         Throwable thrown = assertThrows(IllegalArgumentException.class,
