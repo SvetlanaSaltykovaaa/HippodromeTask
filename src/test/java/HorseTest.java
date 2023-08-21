@@ -1,45 +1,68 @@
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Slf4j
+@ExtendWith(MockitoExtension.class)
 class HorseTest {
 
-    public Horse horse;
+     Horse horse;
 
     @BeforeEach
     public void init() {
-        horse = new Horse("Jane", 10.6, 200.0);
+        horse = new Horse("Jane", 10, 200);
     }
 
     @Test
-    public void getNameTest() {
-        String expectedHorseName = "Jane";
-        String horseName = horse.getName();
-        assertEquals(expectedHorseName, horseName);
+    public void isNullNameException() {
+        Throwable thrown = assertThrows(IllegalArgumentException.class,
+                () -> new Horse(null, 10),
+                "Name cannot be null.");
+        assertEquals("Name cannot be null.", thrown.getMessage());
     }
 
     @Test
-    public void getSpeedTest() {
-        Double expectedSpeed = 10.6;
-        Double horseSpeed = horse.getSpeed();
-        assertEquals(expectedSpeed, horseSpeed);
+    public void isSpeedIsNegative() {
+        Throwable thrown = assertThrows(IllegalArgumentException.class,
+                () -> new Horse("Jane", -10, 12),
+                "Speed cannot be negative.");
+        assertEquals("Speed cannot be negative.", thrown.getMessage());
     }
 
     @Test
-        public void getDistanceSecParam() {
-        Horse secHorse = new Horse("Jane", 10.6);
-        Double expectedDistance = 0.0;
-        Double horseDistance = secHorse.getDistance();
-        assertEquals(expectedDistance, horseDistance);
+    public void isDistanceIsNegative() {
+        Throwable thrown = assertThrows(IllegalArgumentException.class,
+                () ->new Horse("Jane", 10, -12),
+                "Distance cannot be negative.");
+        assertEquals("Distance cannot be negative.", thrown.getMessage());
+    }
+
+    @Test
+    public void getName() {
+        assertEquals("Jane", horse.getName());
+    }
+
+    @Test
+    public void getSpeed() {
+        assertEquals(10, horse.getSpeed());
+    }
+
+    @Test
+    public void getDistanceSecParam() {
+        Horse secondHorse = new Horse("Jane", 10);
+        assertEquals(0, secondHorse.getDistance());
     }
 
     @Test
     public void getDistanceThirdParam() {
-        Double expectedDistance = 200.0;
-        Double horseDistance = horse.getDistance();
-        assertEquals(expectedDistance, horseDistance);
+        assertEquals(200, horse.getDistance());
     }
 
 
 }
+
+
