@@ -1,14 +1,17 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
 class HorseTest {
 
-     Horse horse;
+    Horse horse;
 
     @BeforeEach
     public void init() {
@@ -16,16 +19,24 @@ class HorseTest {
     }
 
     @Test
-    public void isNullNameException() {
+    public void isNullName() {
         Throwable thrown = assertThrows(IllegalArgumentException.class,
                 () -> new Horse(null, 10),
                 "Name cannot be null.");
         assertEquals("Name cannot be null.", thrown.getMessage());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"", " "})
+    public void isNameBlankSpace(String name) {
+        Throwable thrown = assertThrows(IllegalArgumentException.class,
+                () -> new Horse(name, 10, 20),
+                "Name cannot be blank.");
+        assertEquals("Name cannot be blank.", thrown.getMessage());
+    }
 
     @Test
-    public void isSpeedIsNegative() {
+    public void isSpeedNegative() {
         Throwable thrown = assertThrows(IllegalArgumentException.class,
                 () -> new Horse("Jane", -10, 12),
                 "Speed cannot be negative.");
@@ -33,9 +44,9 @@ class HorseTest {
     }
 
     @Test
-    public void isDistanceIsNegative() {
+    public void isDistanceNegative() {
         Throwable thrown = assertThrows(IllegalArgumentException.class,
-                () ->new Horse("Jane", 10, -12),
+                () -> new Horse("Jane", 10, -12),
                 "Distance cannot be negative.");
         assertEquals("Distance cannot be negative.", thrown.getMessage());
     }
