@@ -7,7 +7,7 @@ class MainTest {
 
     @Test
     @Timeout(value =22)
-    public void mainExecutionTime() {
+    public void mainExecutionTime()  {
         /* imitation method time execution */
         try {
             Thread.sleep(5000);
