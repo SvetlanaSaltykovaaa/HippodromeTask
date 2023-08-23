@@ -24,7 +24,6 @@ class HorseTest {
                 "Name cannot be null.");
         assertEquals("Name cannot be null.", thrown.getMessage());
     }
-
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "\t\t", "\n\n\n\n"})
     public void isNameBlankSpace(String name) {
