@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn" name="MyApp">
     <Appenders>
-        <File name="MyFile" fileName="logs/hippodrome.log">
+        <RollingFile
+                name="hippodromeFile"
+                fileName="src/logs/hippodrome.log"
+                filePattern="src/hippodrome.%d{yyyy-MM-dd}.log.gz"
+                ignoreExceptions="false">
             <PatternLayout>
                 <Pattern> %d{DEFAULT} %-5p %C{1} : %m%n</Pattern>
             </PatternLayout>
-        </File>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="logs">
+                <IfFileName  glob="hippodrome.*.log.gz" />
+                <IfLastModified age=" 7d"/>
+            </Delete>
+        </DefaultRolloverStrategy>
+        </RollingFile>
     </Appenders>
     <Loggers>
         <Root  level="info">
-            <AppenderRef ref="MyFile"/>
+            <AppenderRef ref="hippodromeFile"/>
         </Root>
     </Loggers>
 </Configuration>
