@@ -16,6 +16,7 @@ class HippodromeTest {
 
     List<Horse> horses = new ArrayList<>();
     Hippodrome hippodrome;
+
     @Mock
     Horse horse1;
     @Mock
